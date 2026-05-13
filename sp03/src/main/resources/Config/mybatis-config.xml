@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+<!-- 내부 구성 요소의 순서가 정해짐. 공식사이트 참조 -->
+	<!-- Mybatis을 사용할 때 적용할 설정 -->
+	<settings>
+		<setting name="mapUnderscoreToCamelCase" value="true"/> <!-- 카멜로 인식하겠다. -->
+		<setting name="jdbcTypeForNull" value="NULL"/> <!-- db에서 인식하는 타입을 지정해달라 -->
+	</settings>
+	<!-- typeAlias : 별칭 -->
+	<typeAliases>
+		<!-- 지정한 패키지 안(하위 패키지 포함)의 모든 객체를 이름으로 사용 -->
+		<!-- resultType과 parameterType -->
+		<!-- 단, 서로 다른 패키지에 중복되는 이름이 존재하면 안됨. -->
+		<package name="com.yedam.app.mybatis"/>
+	</typeAliases>
+	<!-- typeHandler : jdbcType(DB) <=> javaType(Java) -->
+	<typeHandlers>
+		<typeHandler javaType="java.sql.Timestamp"
+					  handler="org.apache.ibatis.type.DateTypeHandler" />	
+	</typeHandlers> <!-- 자바 클래스의 타입과 오라클 데이터 타입을 매핑시켜줌. =대표적으로 날짜 -->
+	<!--  환경(DB 컨넥션, 트랜잭션)에 대한 설정 -->
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC"/>
+			<dataSource type="POOLED">
+				<property name="driver" value="oracle.jdbc.OracleDriver"/>
+				<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
+				<property name="username" value="hr"/>
+				<property name="password" value="hr"/>
+			</dataSource>			
+		</environment>
+	</environments>
+
+	<!-- Mapper 설정 -->
+	<mappers>
+		<mapper resource="mapper/emp-map.xml"/>
+	</mappers>
+</configuration>

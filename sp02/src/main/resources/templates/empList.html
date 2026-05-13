@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+<meta charset="UTF-8">
+<title></title>
+</head>
+<body>
+	<h2>사원 전체 조회</h2>
+	<table>
+		<thead>
+			<tr>
+				<th>사원번호</th>
+				<th>이름</th>
+				<th>입사일자</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="info : ${emps}">
+				<td>[[ ${info.employee_id} ]]</td>
+				<td>[[ ${info.last_name} ]]</td>
+				<td>[[ ${info.hire_date} ]]</td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>

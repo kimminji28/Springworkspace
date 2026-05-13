@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yedam.app.emp.mapper.EmpMapper">
+	<!-- Interface의 Method를 통해 실행할 SQL문 작성
+		 public List<EmpVO> selectAll();를 채운다는 느낌 -->
+	<select id="selectAll" resultType="com.yedam.app.emp.service.EmpVO">
+		SELECT employee_id,
+			   last_name,
+			   email,
+			   hire_date,
+			   job_id
+		FROM   employees
+		ORDER BY employee_id
+	</select>
+	
+</mapper>
