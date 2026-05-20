@@ -49,7 +49,7 @@ class Sp04ApplicationTests {
 		EmpVO empVO = new EmpVO();
 		empVO.setLastName("Hong");
 		empVO.setEmail("kdHong@google.com");
-		empVO.setSalary(1000);
+//		empVO.setSalary(1000);
 		empVO.setJobId("IT_PROG");
 		//동적 쿼리 테스트
 		empVO.setHireDate(new Date());
@@ -67,7 +67,7 @@ class Sp04ApplicationTests {
 		
 		// 2) 수정정보 포함
 		findVO.setLastName("Grek");
-		findVO.setSalary(3300);
+//		findVO.setSalary(3300);
 		
 		// 3) DB 업데이트
 		int result = empMap.updateEmp(findVO);

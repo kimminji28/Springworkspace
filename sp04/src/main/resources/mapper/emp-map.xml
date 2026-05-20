@@ -15,7 +15,7 @@
         		, manager_id
         		, department_id
 		FROM employees
-		ORDER BY hire_date DESC
+		ORDER BY employee_id DESC
 	</select>
 	
 	<!-- 결과가 하나인 단건조회 -->

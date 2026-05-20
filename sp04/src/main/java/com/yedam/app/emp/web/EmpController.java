@@ -40,6 +40,7 @@ public class EmpController {
 		model.addAttribute("emps", list);
 		// 3-2) 데이터 출력할 페이지 선택
 		return "emp/list"; //return은 '/'로 시작하면안됨
+		//viewresolver에 리턴 값을 돌려줌
 		//prefix => classpath:/templates/
 		//suffix => .html
 		//viewResolver -> classpath:/templates/emp/list.html
@@ -52,12 +53,14 @@ public class EmpController {
 		EmpVO findVO = empService.findByEmployeedId(empVO);
 		model.addAttribute("emp", findVO);
 		return "emp/info";
+		//classpath:/templates/emp/info.html
 	}
 	
 	//등록, 페이지 - GET
 	@GetMapping("empInsert")
 	public String empInsertForm() {
 		return "emp/insert";
+		//classpath:/templates/emp/insert.html
 	}
 	
 	//등록, 처리 - POST => <form/> -> QueryString -> 커맨드객체
@@ -74,6 +77,7 @@ public class EmpController {
 		EmpVO findVO = empService.findByEmployeedId(empVO);
 		model.addAttribute("emp", findVO);
 		return "emp/update";
+		//classpath:/templates/emp/update.html
 	}
 	
 	//수정, 처리 - POST => AJAX
@@ -83,7 +87,7 @@ public class EmpController {
 	 public Map<String, Object> empUpdateProcess
 	 							(@RequestBody EmpVO empVO){
 		return empService.modifyEmpInfo(empVO);
-	 }	
+	 }
 	
 	//삭제, 처리 - GET -> 단건조회에서 삭제할 리스트 삭제하면 전체리스트로 돌아감
 	//QueryString -> 데이터가 하나라 기본타입(인티저/스트링/더블)으로 처리 -> @RequsetParam
