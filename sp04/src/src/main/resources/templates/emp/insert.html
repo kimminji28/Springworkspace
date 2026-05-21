@@ -1,0 +1,69 @@
+<!doctype html>
+<html xmlns:th="https://www.thymeleaf.org/">
+  <head>
+  <meta charset="UTF-8" />
+  <title>Insert title here</title>
+  <th:block th:replace="~{commom/config/default_configs :: BootstrapConfig}"></th:block>
+  </head>
+  <body>
+    <div class="container text-center">
+      <h3>사원 등록</h3>
+      <!--/* 
+      		@{} : 링크표현식 => 경로를 생성할 때 사용
+      		href(a tag/location), src(image), action(form)
+       */-->
+      <form name="insertForm" th:action="@{/empInsert}" method="post">
+        <div>
+          <label for="ename">이름</label>
+          <input id="ename" type="text" name="lastName" />
+        </div>
+        <div>
+          <label for="email">이메일</label>
+          <input id="email" type="email" name="email" />
+        </div>
+        <div>
+          <label for="hdate">입사일</label>
+          <input id="hdate" type="date" name="hireDate" />
+        </div>
+        <div>
+          <label for="job">업무</label>
+          <input id="job" type="text" name="jobId" />
+        </div>
+        <div>
+          <label for="sal">급여</label>
+          <input id="sal" type="number" step="0.01" name="salary" />
+        </div>
+        <div>
+          <button type="reset" class="btn btn-info">초기화</button>
+          <button type="submit" class="btn btn-success">등록</button>
+        </div>
+      </form>
+    </div>
+    <script>
+      document
+        .querySelector('form[name="insertForm"]')
+        .addEventListener("submit", function (event) {
+          event.preventDefault(); //해당 이벤트 핸들러 일시정지
+
+          const formTag = event.currentTarget;
+          let nameTag = formTag.querySelector('[name="lastName"]');
+          if (nameTag.value == "") {
+            //언디파인드 널은 체크 X, 공백만 체크하자
+            alert("이름이 입력되지 않았습니다.");
+            nameTag.focus();
+            return; //함수종료
+          }
+
+          let hdateTag = document.querySelector('form [name="hireDate"]');
+          if (hdateTag.value == "") {
+            alert("입사일자가 입력되지 않았습니다.");
+            hdateTag.focus();
+            return;
+          }
+
+          alert("정상적으로 등록되었습니다.");
+          formTag.submit();
+        });
+    </script>
+  </body>
+</html>

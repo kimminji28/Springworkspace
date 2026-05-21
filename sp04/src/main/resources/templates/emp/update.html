@@ -1,9 +1,11 @@
 <!doctype html>
-<html xmlns:th="https://www.thymeleaf.org/">
+<html xmlns:th="https://www.thymeleaf.org/"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{commom/layouts/default_layout}"
+	  layout:fragment="Content">
   <head>
     <meta charset="UTF-8" />
     <title>Insert title here</title>
-    <th:block th:replace="~{commom/config/default_configs :: BootstrapConfig}"></th:block>
   </head>
   <body>
     <div class="container text-center">

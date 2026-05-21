@@ -1,0 +1,68 @@
+<!doctype html>
+<html xmlns:th="https://www.thymeleaf.org/">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Insert title here</title>
+    <th:block
+      th:replace="~{commom/config/default_configs :: BootstrapConfig}"
+    ></th:block>
+  </head>
+  <body>
+    <div class="container text-center">
+      <h3>부서 수정</h3>
+      <form name="updateForm" th:object="${dept}">
+        <div>
+          <label for="did">부서번호</label>
+          <input id="did" type="text" th:field="*{departmentId}" readonly />
+        </div>
+        <div>
+          <label for="dname">부서명</label>
+          <input id="dname" type="text" th:field="*{departmentName}" />
+        </div>
+        <div>
+          <label for="dmid">관리자아이디</label>
+          <input id="dmid" type="text" th:field="*{managerId}" />
+        </div>
+        <div>
+          <label for="dloid">위치아이디</label>
+          <input id="dloid" type="text" th:field="*{locationId}" />
+        </div>
+        <div>
+          <button type="button" class="btn btn-success">수정</button>
+        </div>
+      </form>
+    </div>
+    <script>
+      updateForm.querySelector("button").addEventListener("click", updateAjax);
+
+      async function updateAjax(event) {
+        let dataObject = getEmpObj();
+        let response = await fetch(`deptList`, {
+          method: "post",
+          headers: {
+            "Content-type": "application/json",
+          },
+          body: JSON.stringify(dataObject),
+        })
+          .then((res) => res.json())
+          .catch((err) => console.log(err));
+
+        console.log(response);
+        if (response.result) {
+          alert(`${response.target.departmentId} 부서정보가 수정되었습니다.`);
+        }
+      }
+
+      function getEmpObj() {
+        let formData = new FormData(updateForm);
+
+        let formObj = {};
+        formData.forEach((value, name) => {
+          console.log("value, name", value, name);
+          formObj[name] = value;
+        });
+        return formObj;
+      }
+    </script>
+  </body>
+</html>

@@ -46,7 +46,7 @@ public class DeptController {
 	@PostMapping("deptInsert")
 	public String deptInsertProcess(DeptVO deptVO) {
 		int did = deptService.addDeptInfo(deptVO);
-		return "redirect:deptInfo?DEPARTMENTID=" + did;
+		return "redirect:deptInfo?departmentId=" + did;
 	}
 	
 	//수정, 페이지 GET

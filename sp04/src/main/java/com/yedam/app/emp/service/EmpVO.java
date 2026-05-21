@@ -4,9 +4,15 @@ import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data //내부적으로 총 5개의 어노테이션을 기반으로 동작함 (이 5개가 모두 필요한 게 아니면 data 쓰면 안됨)
+@NoArgsConstructor //Mybatis, HanderAdapter에서도 필요한 애임 (생성자 만들어주는거였나 없는거였나 뭐 암튼 빌더를 쓰려면 생성자가 필요함)
+@AllArgsConstructor
+@Builder
 public class EmpVO {
 	//DB와 연결 => 컬럼명을 참고해서 필드명 구성
 	private Integer employeeId;   //PK

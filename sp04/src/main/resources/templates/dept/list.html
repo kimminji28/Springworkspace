@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<th:block th:replace="~{commom/config/default_configs :: BootstrapConfig}"></th:block>
+<!-- ftagment -> 다른 파일에 공통된 코드 넣어놓고, 조각을 가져와서 레이아웃 구성 -->
+</head>
+<body>
+	<div class='container text-center' >
+		<h3 >전체 부서 조회</h3>
+			<table class="table border">
+				<thead>
+					<tr>
+						<th>NO</th>
+						<th>부서번호</th>
+						<th>부서명</th>
+						<th>관리자아이디</th>
+						<th>위치아이디</th>
+					</tr>
+				</thead>
+				<tbody>
+					<th:block th:each="info, status : ${depts}">
+					<tr th:onclick="|location.href='@{/deptInfo(departmentId=${info.departmentId})}'|">
+						<td>[[ ${status.count} ]]</td>
+						<td>[[ ${info.departmentId} ]]</td>
+						<td>[[ ${info.departmentName} ]]</td>
+						<td>[[ ${info.managerId} ]]</td>
+						<td>[[ ${info.locationId} ]]</td>
+					</tr>
+					</th:block>
+				</tbody>
+			</table>
+	</div>
+</body>
+</html>

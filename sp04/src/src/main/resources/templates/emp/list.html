@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- bootstrap => fragment -->
+<!--/* ㄴ~{파일의 경로 :: fragment 이름} */-->
+<th:block th:replace="~{commom/config/default_configs :: BootstrapConfig}"></th:block>
+</head>
+<body>
+	<div class='container text-center'>
+		<h3>전체 사원 조회</h3>
+		<table class="table border">
+			<thead>
+				<tr>
+					<th>NO</th>
+					<th>사원번호</th>
+					<th>이름</th>
+					<th>입사일자</th>
+					<th>업무</th>
+				</tr>
+			</thead>
+			<tbody>
+				<th:block th:each="info, sts : ${emps}">
+					<tr th:onclick="|location.href='@{/empInfo(employeeId=${info.employeeId})}'|">
+						<!--/* 일반 넘버링이라 상태값을 이용해 카운트 사용 */-->
+						<td>[[ ${sts.count} ]]</td>
+						<td>[[ ${info.employeeId} ]]</td>
+						<td>[[ ${info.lastName} ]]</td>
+						<td>[[ ${#dates.format(info.hireDate, 'yyyy년MM월dd일')} ]]</td>
+						<td>[[ ${info.jobId} ]]</td>
+					</tr>
+				</th:block>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>
