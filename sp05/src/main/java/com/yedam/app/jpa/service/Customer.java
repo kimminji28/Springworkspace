@@ -10,9 +10,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Data;
 
-@Entity
+//@Entity
+@Entity(name="cust")   //테이블명 따로 지정안하면 엔티티 이름을 기준으로 새테이블 만들어버림
+@Table(name="Customer")
 @Data
 public class Customer {
 	@Id

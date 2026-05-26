@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yedam.app.securify.mapper.UserMapper">
+	<!-- UserVO 타입이 1건이라 데이터가 못넘어와서 재설정해줘야함 -->
+	<!-- login_id가 중복이면 하나의 아이디로 묶는데 뭘 기준으로 묶을거냐? 컬럼 지정해줘야함 -->
+	<!-- property : 자바 필드명
+		 column : 각 필드에 대응하는 컬럼
+		 collection : 여러행으로 나눠진 애들을 묶음
+		 ofType : 리스트에 담긴 데이터가 스프링 같은 기본타입이면 오브타입 사용
+		 resultSet : 리스트에 담긴 데이터가 기본타입 이외면 리절트셋 사용
+	-->
+	<resultMap id="userInfo" type="UserVO">
+		<id property="loginId" column="loginId"></id>
+		<result property="password" column="password"></result>
+		<collection property="roleList" ofType="String">
+			<result column="role_name"></result>
+		</collection>
+	<!-- DB에서의 결과 : [admin / $2a$10$GIJAGijeMzxq1AgsPCp5jOsWP/84SVDB7xuifQdmrA6zx9aVCAXEy [ROLE_USER, ROLE_ADMIN]] -->
+	</resultMap>
+	
+	<!-- resultMap : 내가 별도로 따로 만든 파일만 기재할 수 있음 -->
+	<select id="getUserInfo" parameterType="String" resultMap="userInfo">
+		SELECT login_id
+      		   , password
+      		   , role_name
+		FROM t_user
+			   JOIN t_user_role ON t_user.id = t_user_role.user_id
+			   JOIN t_role ON t_user_role.role_id = t_role.id
+		WHERE login_id = ${id}
+	</select>
+	
+</mapper>
