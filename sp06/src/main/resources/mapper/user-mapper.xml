@@ -10,7 +10,7 @@
 		 resultSet : 리스트에 담긴 데이터가 기본타입 이외면 리절트셋 사용
 	-->
 	<resultMap id="userInfo" type="UserVO">
-		<id property="loginId" column="loginId"></id>
+		<id property="loginId" column="login_id"></id>
 		<result property="password" column="password"></result>
 		<collection property="roleList" ofType="String">
 			<result column="role_name"></result>
@@ -26,7 +26,7 @@
 		FROM t_user
 			   JOIN t_user_role ON t_user.id = t_user_role.user_id
 			   JOIN t_role ON t_user_role.role_id = t_role.id
-		WHERE login_id = ${id}
+		WHERE login_id = #{id}
 	</select>
 	
 </mapper>

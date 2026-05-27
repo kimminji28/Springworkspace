@@ -1,22 +1,53 @@
-<!DOCTYPE html>
-<html xmlns:th="https://www.thymeleaf.org/">
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-	<h1>메인 페이지입니다.</h1>
-	<ul>
-		<li>
-			<a th:href="@{/user}">일반 사용자용 페이지로</a>
-		</li>
-		<li>
-			<a th:href="@{/admin}">관리자 전용 페이지로</a>
-		</li>
-	</ul>
-	
-	<form th:action="@{/logout}" method="post">
-		<button type="submit">로그아웃</button>
-	</form>
-</body>
+<!doctype html>
+<html
+  xmlns:th="https://www.thymeleaf.org/"
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="_csrf" th:content="${_csrf.token}" />
+    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+    <!-- 강제로 토큰 값 가져오는 코드 -->
+    <title>Insert title here</title>
+  </head>
+  <body>
+    <h1>메인 페이지입니다.</h1>
+    <ul>
+      <li>
+        <a th:href="@{/user}">일반 사용자용 페이지로</a>
+      </li>
+      <li sec:authorize="hasRole('ADMIN')">
+        <a th:href="@{/admin}">관리자 전용 페이지로</a>
+      </li>
+    </ul>
+    <th:block sec:authorize="isAuthenticated()">
+      <p sec:authentication="principal.username"></p>
+      <p sec:authentication="principal.authorities"></p>
+
+      <form th:action="@{/logout}" method="post">
+        <button type="submit">로그아웃</button>
+      </form>
+    </th:block>
+    <script>
+      const csrfHeader = document.querySelector('meta[name="_csrf_header"]').content;
+      const csrfToken = document.querySelector('meta[name="_csrf"]').content;
+      let headers = new Headers();
+
+      headers.append(csrfHeader, csrfToken);
+      // fetch, URLSearchParams
+      fetch("/info", {
+        method: "post",
+        headers,
+        // headers: { 이건 자동으로 생성되는거라 없어도 됨
+        //   // "Content-type": "application/x-www-form-urlencoded",
+        // },
+        body: new URLSearchParams({ keyword: "Hello" }),
+      })
+        .then((res) => res.text()) //응답하는 객체를 파싱하는 객체가 json만 있는 게 아님
+        .then((result) => {
+          console.log(result);
+        })
+        .catch((err) => console.log(err));
+    </script>
+  </body>
 </html>

@@ -4,12 +4,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+
+import com.yedam.app.securify.mapper.UserMapper;
+import com.yedam.app.securify.service.impl.CustomerUserDetailsService;
 
 import jakarta.servlet.DispatcherType;
 
@@ -29,7 +31,7 @@ public class SpringSecurityConfig {
 			.authorizeHttpRequests(authrize
 				-> authrize
 				.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
-				.requestMatchers("/", "/all").permitAll()
+				.requestMatchers("/", "/all", "/info").permitAll()
 				.requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
 				.requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
 				.anyRequest().authenticated()
@@ -45,10 +47,26 @@ public class SpringSecurityConfig {
 		    	.deleteCookies("JSESSIONID")
 		    );
 		
+		// CSRF protection 비활성화
+		//http.csrf(csrf -> csrf.disable());
 		return http.build();
 	}
 	
-	@Bean //메모리상 인증정보 등록 => 테스트 전용 방식
+	//자바스크립트에서 파일 열리게 보안 설정
+	@Bean
+	public WebSecurityCustomizer webSecurityCustomizer() {
+		return (web) -> web
+						.ignoring()
+						.requestMatchers("/images/**", "/js/**", "/css/**");
+	}	
+	
+	@Bean
+	UserDetailsService customerUserDetailsService(UserMapper usermapper) {
+		return new CustomerUserDetailsService(usermapper);
+	}
+	
+	//인메모리 죽임
+	/*@Bean //메모리상 인증정보 등록 => 테스트 전용 방식
 	InMemoryUserDetailsManager inmemoryUserDetailaSevice() {
 		UserDetails user = User.builder()
 							   .username("user1")
@@ -63,6 +81,6 @@ public class SpringSecurityConfig {
 							    .build();
 		return new InMemoryUserDetailsManager(user, admin);
 	}
-	
+	*/
 	
 }
