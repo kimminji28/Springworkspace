@@ -9,4 +9,10 @@ import com.yedam.app.board.service.BoardVO;
 public interface BoardMapper {
 	//전체조회
 	public List<BoardVO> selectAll();
+	
+	//단건조회
+	public BoardVO selectInfo(BoardVO boardVO);
+	
+	//등록 selectKey <insert/> <update/>
+	public int insertInfo(BoardVO boardVO);
 }

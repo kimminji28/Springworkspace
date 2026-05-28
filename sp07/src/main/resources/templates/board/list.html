@@ -21,7 +21,7 @@
 			</thead>
 			<tbody>
 				<th:block th:each="info : ${boards}">
-					<tr>
+					<tr th:onclick="|location.href='@{/boardInfo(bno=${info.bno})}'|">
 						<td>[[ ${info.bno} ]]</td>
 						<td>[[ ${info.title} ]]</td>
 						<td>[[ ${info.writer} ]]</td>
@@ -32,4 +32,4 @@
 		</table>
 	</div>
 </body>
-</html>
+</html> 

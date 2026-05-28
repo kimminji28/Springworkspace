@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  	  layout:decorate="~{common/layouts/dafault_layout}"
+  	  layout:fragment="Content">
+<head>
+<meta charset="UTF-8">
+<title></title>
+</head>
+<body>
+	<div class="container text-center">
+		<h3>게시글 정보</h3>
+		<div class="row">
+			<div class="col-4 col-form-label">번호</div>
+			<div class="col-8">[[ ${board.bno} ]]</div>
+		</div>
+		<div class="row">
+			<div class="col-4 col-form-label">제목</div>
+			<div class="col-8">[[ ${board.title} ]]</div>
+		</div>
+		<div class="row">
+			<div class="col-4 col-form-label">작성자</div>
+			<div class="col-8">[[ ${board.writer} ]]</div>
+		</div>
+		<div class="row">
+			<div class="col-4 col-form-label">내용</div>
+			<div class="col-8">[[ ${board.contents} ]]</div>
+		</div>
+		<div class="row">
+			<div class="col-4 col-form-label">첨부파일</div>
+			<div class="col-8">
+														<!-- /image/raccoon.jpg인데 pathvariable로 {}안에 변수 선언해서 사용해야함 -->
+				<img style="width:35%;" th:src="@{/images/{file}(file=${board.image})}">
+			</div>
+		</div>
+		<div class="row"> <!-- yyyy/MM/dd -->
+			<div class="col-4 col-form-label">작성일자</div>
+			<div class="col-8">[[ ${#dates.format(board.regdate, 'yyyy/MM/dd')} ]]</div>
+		</div>
+		<div>
+			<button type="button" class="btn btn-primary" th:onclick="|location.href='@{/boardList}'|">목록</button>
+		</div>
+	</div>
+</body>
+</html>
