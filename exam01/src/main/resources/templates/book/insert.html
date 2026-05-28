@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  	  layout:decorate="~{common/layouts/default_layout}"
+  	  layout:fragment="Content">
+<head>
+<meta charset="UTF-8">
+<title></title>
+</head>
+<body>
+<script>
+      document.addEventListener("DOMContentLoaded", function (event) {
+        //DOM이 완성되고 난 후 해당 코드를 수행
+        document
+          .querySelector("[name=bookAdd")
+          .addEventListener("submit", bookdInsertAjax);
+      });
+
+      function bookdInsertAjax(event) {
+        event.preventDefault();
+        let formTag = event.currentTarget;
+
+        //도서명
+        let bkNameTag = formTag.querySelector('[name="bookName"]');
+        if (bkNameTag.value == "") {
+          alert("도서명이 입력되지 않았습니다.");
+          bkNameTag.focus();
+          return;
+        }
+
+        alert("도서 등록이 완료되었습니다.");
+        formTag.submit();
+      }
+     </script>
+	<div class="container text-center">
+		<form name="bookAdd" th:action="@{/bookInsert}" method="post">
+			<h3>도서 등록</h3>
+			<div class="row">
+				<div class="col-4 col-form-label">도서명</div>
+				<div class="col-8"><input type="text" name="bookName"></div>
+			</div>
+			<div class="row">
+				<div class="col-4 col-form-label">도서표지</div>
+				<div class="col-8">
+					<input type="text" name="images" />
+				</div>
+			</div>
+			<div class="row"> <!-- yyyy/MM/dd -->
+				<div class="col-4 col-form-label">출판일자</div>
+				<div class="col-8"><input type="date" name="bookDate"></div>
+			</div>
+			<div class="row">
+				<div class="col-4 col-form-label">금액</div>
+				<div class="col-8"><input type="text" name="bookPrice"></div>
+			</div>
+			<div class="row">
+				<div class="col-4 col-form-label">출판사</div>
+				<div class="col-8"><input type="text" name="bookPublisher"></div>
+			</div>
+			<div class="row">
+				<div class="col-4 col-form-label">도서소개</div>
+				<div class="col-8"><textarea row="3" name="bookInfo"></textarea></div>
+			</div>
+			<div>
+				<button type="submit" class="btn btn-primary">등록</button>
+				<button type="button" class="btn btn-success" th:onclick="|location.href='@{/bookList}'|">조회</button>
+			</div>
+		</form>
+	</div>
+</body>
+</html>
